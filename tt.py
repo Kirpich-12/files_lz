@@ -1,2 +1,2 @@
-import nltk
-nltk.download('punkt_tab')
+from string import punctuation as pc
+print(pc)

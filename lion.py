@@ -1,23 +1,29 @@
+from collections import Counter as ct
 from docx import Document as dc
-import string, nltk
-from nltk.probability import FreqDist
+from string import punctuation as pcc
 
 doc = dc('lion.docx')
-text = []
-spec_chars = string.punctuation + '\n\xa0«»\t—…,.—' 
+text_f = []
+text_s = []
+text_p = []
+
+pc = pcc + '—'
 
 for docparagraph in doc.paragraphs:
-    text.append(docparagraph.text)
+    text_s.append(docparagraph.text)
 
-tt = ''.join(text)
+text_s = ''.join(text_s)
+text_s = text_s.lower()
 
-tt = tt.lower
-tt = "".join([ch for ch in text if ch not in spec_chars])# Делаем всебуквы маленькими и избовляемся от символов
+for i in text_s:
+    if i not in pc:
+        text_p.append(i)
+    else:
+        text_p.append(' ')
+text_p = ''.join(text_p)
 
-from nltk import word_tokenize
-text_tokens = word_tokenize(tt)
+text_f = text_p.split()
 
-tt = nltk.Text(text_tokens)
-fdist = FreqDist(tt)
+ans = ct(text_f)
 
-print(fdist.most_common(30))
+for i, j in ans.items():
